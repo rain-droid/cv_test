@@ -58,6 +58,8 @@ Links:
 
 ## Params
 
+N_DATA = 283 # ! muss angepasst werden noch keine Ahnung
+
 EPOCHE = 3-5 
 BATCH_SIZE = 2-4 
 GRADIENT_CHECKPOINTING = True
@@ -75,8 +77,7 @@ MAX_GRAD_NORM = 1 # 0.5 stabiler, ausprobieren
 WARMUP_STEPS = 0 # 5-10% der Schritte
 DATASET_KWARG = {"skip_prepare_dataset":True} # wir preparen selber afaoik
 REMOVE_UNUSED_COLUMNS = False
-MAX_SEQ_LEN = 128 # Richie hat 512 geused
-N_DATA = 283 # ! muss angepasst werden noch keine Ahnung
+MAX_SEQ_LEN = 512
 NUM_STEPS = (N_DATA // BATCH_SIZE) * EPOCHS
 print(f"NUM_STEPS: {NUM_STEPS}")
 
