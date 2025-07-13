@@ -1,9 +1,4 @@
-
-
-
 Richies Code Dependencies
-
-
 --installs-------------
 
 Pip Packages:
@@ -22,7 +17,6 @@ Training Kontrollmechanismen => Training: Struktur  & Skalierbarkeit
 
 Github Packages:
 - huggingface/transformers  ->"https://github.com/huggingface/transformers.git"
-
 
 
 --imports-------------
@@ -62,3 +56,38 @@ numpy
 Links:
 - https://github.com/uygarkurt/Fine-Tune-VLMs
 
+## Params
+
+EPOCHE = 3-5 
+BATCH_SIZE = 2-4 
+GRADIENT_CHECKPOINTING = True
+USE_REENTRAT = False  # bei memerr true, da cuda vorhanden
+OPTIM = "paged_adamw_32bit"     # efficient (annahme: wenig speicher)
+LEARNING_RATE =  2e-5  # bis zu 3e-5
+LOGGING_STEPS = 50 # abhängig von num_step (ca 20%)
+EVAL_STEPS = 50
+SAVE_STEPS = 50 # kann größer um speicher zu sparen
+EVAL_STRATEGY = "steps" > alle EVAL_STEPS wird Eval ausgeführt
+SAVE_STRATEGY = "steps"
+METRIC_FOR_BEST_MODEL = "eval_loss"
+LOAD_BEST_MODEL_AT_END = True
+MAX_GRAD_NORM = 1 # 0.5 stabiler, ausprobieren
+WARMUP_STEPS = 0 # 5-10% der Schritte
+DATASET_KWARG = {"skip_prepare_dataset":True} # wir preparen selber afaoik
+REMOVE_UNUSED_COLUMNS = False
+MAX_SEQ_LEN = 128 # Richie hat 512 geused
+N_DATA = 283 # ! muss angepasst werden noch keine Ahnung
+NUM_STEPS = (N_DATA // BATCH_SIZE) * EPOCHS
+print(f"NUM_STEPS: {NUM_STEPS}")
+
+weitere:
+
+gradient_accumulation_steps hoch und batch size niedrig, wenn mem gering
+-/- klein und batch size hoch, wenn mem hoch
+
+
+warm up:
+
+< 1k sample  < 500 num steps => 5-30
+10k samples ; 1-5k ; 3-5%
+> 100k ; > 10k; 10%+
